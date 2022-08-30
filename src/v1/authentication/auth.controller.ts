@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { SafeUser, User } from 'src/users/users.entity';
+import { SafeUser, User } from '../users/users.entity';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -19,7 +19,7 @@ export interface UserRequest extends Request {
   user: SafeUser;
 }
 
-@Controller('auth')
+@Controller({ version: ['1'], path: 'auth' })
 @ApiTags('Authentication')
 export class AuthController {
   @Inject(AuthService)

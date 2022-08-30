@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthHelper } from './auth.helper';
-import { User } from 'src/users/users.entity';
+import { User } from '../users/users.entity';
 
 import 'dotenv/config';
 

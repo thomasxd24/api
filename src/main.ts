@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services';
 
 import {
@@ -39,21 +39,17 @@ async function bootstrap() {
   // Add static files to the app
   app.useStaticAssets(`${__dirname}/../public`);
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.setGlobalPrefix('api');
+  app.enableVersioning({ type: VersioningType.URI })
 
   const document = SwaggerModule.createDocument(app, config, options);
-  SwaggerModule.setup('docs', app, document, swaggerOptions);
+  SwaggerModule.setup('api/docs', app, document, swaggerOptions);
 
   await app.listen(process.env.PORT);
 
   Logger.log(`Server running on port ${process.env.PORT}`, 'Bootstrap');
-  Logger.log(
-    `Swagger documentation available on http://localhost:${process.env.PORT}/docs`,
-    'Bootstrap',
-  );
-  Logger.log(
-    `Swagger JSON docs at http://localhost:${process.env.PORT}/docs-json`,
-    'Bootstrap',
-  );
+  Logger.log(`Swagger documentation available on http://localhost:${process.env.PORT}/api/docs`, 'Bootstrap');
+  Logger.log(`Swagger JSON docs at http://localhost:${process.env.PORT}/api/docs-json`, 'Bootstrap');
 }
 
 bootstrap();
