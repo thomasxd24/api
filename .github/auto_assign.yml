@@ -1,0 +1,6 @@
+addReviewers: true
+addAssignees: author
+reviewers: 
+  - ae-utbm/developers-v4
+numberOfReviewers: 0
+runOnDraft: true
