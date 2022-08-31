@@ -1,14 +1,14 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import {
-  IsDateString,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Min,
-  MinLength,
-} from 'class-validator';
+import { User } from '@prisma/client';
+import { IsDateString, IsEmail, IsNumber, IsOptional, IsString, Min, MinLength } from 'class-validator';
 
+export type SafeUser = Omit<User, 'password'>;
 export class UpdateUserDto {
+  @IsEmail()
+  @IsOptional()
+  @ApiPropertyOptional()
+  public readonly email: string;
+
   @IsString()
   @MinLength(3)
   @IsOptional()

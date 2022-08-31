@@ -4,26 +4,13 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services';
 
-import {
-  DocumentBuilder,
-  SwaggerDocumentOptions,
-  SwaggerCustomOptions,
-  SwaggerModule,
-} from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerDocumentOptions, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 
 import 'dotenv/config';
 
 async function bootstrap() {
   // Configuration of the swagger documentation
-  const config = new DocumentBuilder()
-    .setTitle("API : Association des Étudiants de l'UTBM")
-    .setDescription('Rest API for the AE UTBM')
-    .setVersion('0.0.1')
-    .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-      'authenticatedUser',
-    )
-    .build();
+  const config = new DocumentBuilder().setTitle("API : Association des Étudiants de l'UTBM").setDescription('Rest API for the AE UTBM').setVersion('0.0.1').addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'authenticatedUser').build();
 
   const options: SwaggerDocumentOptions = { deepScanRoutes: true };
   const swaggerOptions: SwaggerCustomOptions = {
@@ -46,14 +33,8 @@ async function bootstrap() {
   await app.listen(process.env.PORT);
 
   Logger.log(`Server running on port ${process.env.PORT}`, 'Bootstrap');
-  Logger.log(
-    `Swagger documentation available on http://localhost:${process.env.PORT}/docs`,
-    'Bootstrap',
-  );
-  Logger.log(
-    `Swagger JSON docs at http://localhost:${process.env.PORT}/docs-json`,
-    'Bootstrap',
-  );
+  Logger.log(`Swagger documentation available on http://localhost:${process.env.PORT}/docs`, 'Bootstrap');
+  Logger.log(`Swagger JSON docs at http://localhost:${process.env.PORT}/docs-json`, 'Bootstrap');
 }
 
 bootstrap();
