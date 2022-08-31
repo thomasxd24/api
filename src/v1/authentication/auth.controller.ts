@@ -6,13 +6,13 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthValidated } from './auth.helper';
 
 import { Body, ClassSerializerInterceptor, Controller, Inject, Post, Req, UseInterceptors } from '@nestjs/common';
-import { SafeUser } from 'src/users/users.dto';
+import { SafeUser } from '../users/users.dto';
 
 export interface UserRequest extends Request {
   user: SafeUser;
 }
 
-@Controller('auth')
+@Controller({ version: ['1'], path: 'auth' })
 @ApiTags('Authentication')
 export class AuthController {
   @Inject(AuthService)
