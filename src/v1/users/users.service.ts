@@ -1,35 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { User } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 import { UpdateUserDto } from './users.dto';
-import { SafeUser, User } from './users.entity';
+import { SafeUser } from './users.dto';
 
 @Injectable()
 export class UserService {
-  @InjectRepository(User)
-  private readonly repository: Repository<User>;
-
+  constructor(private prisma: PrismaService) {}
   /**
    * Update user's name
    * @return {User}
    */
   public async update(body: UpdateUserDto, uuid: string): Promise<void> {
-    this.repository.findOneBy({ id: uuid }).then((user) => {
-      user.address = body.address;
-      user.birthDate = body.birthDate;
-      user.department = body.department;
-      user.emergencyPhone = body.emergencyPhone;
-      user.faculty = body.faculty;
-      user.forename = body.forename;
-      user.gender = body.gender;
-      user.name = body.name;
-      user.nickname = body.nickname;
-      user.parentsAddress = body.parentAddress;
-      user.phone = body.phone;
-      user.promotion = body.promotion;
-      user.pronouns = body.pronouns;
-
-      this.repository.save(user);
+    this.prisma.user.update({
+      where: {
+        uuid: uuid,
+      },
+      data: body,
     });
   }
 
@@ -38,14 +25,14 @@ export class UserService {
    * @return {SafeUser}
    */
   public async getUser(uuid: string): Promise<SafeUser> {
-    return this.repository.findOneBy({ id: uuid });
+    return this.prisma.user.findUnique({ where: { uuid: uuid } });
   }
 
   /**
    * Delete user
    * @return {void}
    */
-  public async delete(uuid: string): Promise<void> {
-    this.repository.delete({ id: uuid });
+  public async delete(uuid: string): Promise<User> {
+    return this.prisma.user.delete({ where: { uuid: uuid } });
   }
 }

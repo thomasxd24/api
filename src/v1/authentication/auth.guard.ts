@@ -1,7 +1,6 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard, IAuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
-import { User } from '../users/users.entity';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') implements IAuthGuard {
@@ -19,7 +18,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') implements IAuthGuard {
     // console.log('SELF ?', user.id === params.uuid);
 
     // self-operation are allowed
-    if (params.uuid === user.id) return true;
+    if (params.uuid === user.uuid) return true;
     // check if the asking user can access/modify/delete the targeted user
     else {
       /**

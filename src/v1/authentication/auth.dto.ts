@@ -1,9 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Trim } from 'class-sanitizer';
-import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class RegisterDto {
-  @Trim()
   @IsEmail()
   @ApiProperty()
   public readonly email: string;
@@ -17,10 +16,19 @@ export class RegisterDto {
   @MinLength(3)
   @ApiPropertyOptional()
   public readonly username: string;
+
+  @IsString()
+  public readonly firstName: string;
+
+  @IsString()
+  public readonly lastName: string;
+
+  @IsDate()
+  @Type(() => Date)
+  public readonly birthDate: Date;
 }
 
 export class LoginDto {
-  @Trim()
   @IsEmail()
   @IsOptional()
   @ApiPropertyOptional()

@@ -1,14 +1,9 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../users/users.entity';
-import { Repository } from 'typeorm';
+import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { PrismaService } from '../prisma/prisma.service';
+import { v4 as uuidv4 } from 'uuid';
 
 export class AuthValidated {
   token: string;
@@ -16,10 +11,7 @@ export class AuthValidated {
 
 @Injectable()
 export class AuthHelper {
-  @InjectRepository(User)
-  private readonly repository: Repository<User>;
-
-  constructor(private readonly jwt: JwtService) {}
+  constructor(private readonly jwt: JwtService, private readonly prisma: PrismaService) {}
 
   /**
    * Decode the JWT Token
@@ -34,7 +26,7 @@ export class AuthHelper {
    * @param {*} decoded
    */
   public async validateUser(decoded: any): Promise<User> {
-    return this.repository.findOneBy({ id: decoded.id });
+    return this.prisma.user.findUnique({ where: { uuid: decoded.id } });
   }
 
   /**
@@ -42,7 +34,7 @@ export class AuthHelper {
    * @param {User} user - The User to generate the JWT Token for
    */
   public generateToken(user: User): string {
-    return this.jwt.sign({ id: user.id, email: user.email });
+    return this.jwt.sign({ id: user.uuid, email: user.email });
   }
 
   /**
@@ -77,5 +69,9 @@ export class AuthHelper {
 
     if (!user) throw new UnauthorizedException();
     return true;
+  }
+
+  public async generateUUID(): Promise<string> {
+    return uuidv4();
   }
 }

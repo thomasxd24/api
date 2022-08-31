@@ -1,25 +1,18 @@
 import { Request } from 'express';
-import { SafeUser, User } from '../users/users.entity';
+import { User } from '@prisma/client';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthValidated } from './auth.helper';
 
-import {
-  Body,
-  ClassSerializerInterceptor,
-  Controller,
-  Inject,
-  Post,
-  Req,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Inject, Post, Req, UseInterceptors } from '@nestjs/common';
+import { SafeUser } from 'src/users/users.dto';
 
 export interface UserRequest extends Request {
   user: SafeUser;
 }
 
-@Controller({ version: ['1'], path: 'auth' })
+@Controller('auth')
 @ApiTags('Authentication')
 export class AuthController {
   @Inject(AuthService)
