@@ -171,6 +171,6 @@ dist
 *.code-workspace
 
 # Db related
-.db
+**/*.db
 
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode
