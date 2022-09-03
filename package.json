@@ -18,15 +18,18 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "pretest:e2e": "npm run prisma:test:deploy",
+    "test:e2e": "dotenv -e.env.test -- jest --config ./test/jest-e2e.json",
+    "pretest:e2e:ci": "dotenv -e .env.ci -- npx prisma migrate deploy",
+    "test:e2e:ci": "dotenv -e .env.ci -- jest --config ./test/jest-e2e.json",
     "db:prisma:deploy": "prisma migrate deploy",
     "db:dev:rm": "docker compose -f docker-compose.yml -f docker-compose.dev.yml rm db -s -f -v",
     "db:dev:up": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up db -d",
     "db:dev:restart": "npm run db:dev:rm && npm run db:dev:up && sleep 2 && npx db:prisma:deploy",
-    "prisma:test:deploy": "dotenv -e.env.test -- npm run db:prisma:deploy",
-    "db:test:rm": "docker compose -f docker-compose.yml -f docker-compose.test.yml rm db -s -f -v",
-    "db:test:up": "docker compose -f docker-compose.yml -f docker-compose.test.yml up db -d",
-    "db:test:restart": "dotenv -e .env.test -- npm run db:test:rm && npm run db:test:up && sleep 2 && npx prisma:test:deploy"
+    "prisma:test:deploy": "dotenv -e.env.test -- npx prisma migrate deploy",
+    "db:test:rm": "dotenv -e .env.test -- docker compose -f docker-compose.yml -f docker-compose.test.yml rm db -s -f -v",
+    "db:test:up": "dotenv -e .env.test -- docker compose -f docker-compose.yml -f docker-compose.test.yml up db -d",
+    "db:test:restart": "npm run db:test:rm && npm run db:test:up && sleep 2 && npm run prisma:test:deploy"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

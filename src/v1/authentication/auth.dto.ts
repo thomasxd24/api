@@ -3,43 +3,46 @@ import { Type } from 'class-transformer';
 import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class RegisterDto {
-  @IsEmail()
   @ApiProperty()
+  @IsEmail()
   public readonly email: string;
 
+  @ApiProperty()
   @IsString()
   @MinLength(8)
-  @ApiProperty()
   public readonly password: string;
 
+  @ApiProperty()
   @IsString()
   @MinLength(3)
-  @ApiPropertyOptional()
   public readonly username: string;
 
+  @ApiPropertyOptional()
   @IsString()
   public readonly firstName: string;
 
+  @ApiPropertyOptional()
   @IsString()
   public readonly lastName: string;
 
+  @ApiProperty()
   @IsDate()
   @Type(() => Date)
   public readonly birthDate: Date;
 }
 
 export class LoginDto {
-  @IsEmail()
-  @IsOptional()
   @ApiPropertyOptional()
+  @IsOptional()
+  @IsEmail()
   public readonly email?: string;
 
-  @IsString()
-  @IsOptional()
   @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
   public readonly username?: string;
 
-  @IsString()
   @ApiProperty()
+  @IsString()
   public readonly password: string;
 }

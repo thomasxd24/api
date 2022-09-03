@@ -3,9 +3,9 @@ services:
   db:
     container_name: test-db
     ports:
-      - 5434:5432
+      - ${DATABASE_PORT}:5432
     environment:
-      POSTGRES_USER: sith4
-      POSTGRES_PASSWORD: s0m3p4ssW0rd
-      POSTGRES_DB: sith4-api-test
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
 
