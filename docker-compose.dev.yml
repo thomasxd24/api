@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  db:
+    container_name: dev-db
+    image: postgres:14
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: sith4
+      POSTGRES_PASSWORD: s0m3p4ssW0rd
+      POSTGRES_DB: sith4-api
+

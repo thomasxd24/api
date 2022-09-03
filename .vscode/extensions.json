@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "streetsidesoftware.code-spell-checker",
+    "leonardssh.vscord",
+    "github.copilot",
+    "github.vscode-pull-request-github",
+    "eamodio.gitlens",
+    "ms-vscode.vscode-typescript-next"
+  ]
+}
