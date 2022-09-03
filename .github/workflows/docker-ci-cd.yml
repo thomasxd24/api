@@ -79,7 +79,7 @@ jobs:
       - name: Pruning package
         uses: actions/delete-package-versions@v3
         with:
-          package-name: ${{ env.REPO_NAME }}/${{ github.run_id }}-testing
+          package-name: '${{ env.REPO_NAME }}/${{ github.run_id }}-testing'
           min-versions-to-keep: 0
 
   build-final-image:
