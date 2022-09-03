@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - canary
-      - ci-cd
     pull_request:
 
 env:
