@@ -6,6 +6,7 @@
     "github.copilot",
     "github.vscode-pull-request-github",
     "eamodio.gitlens",
-    "ms-vscode.vscode-typescript-next"
+    "ms-vscode.vscode-typescript-next",
+    "Prisma.prisma"
   ]
 }
