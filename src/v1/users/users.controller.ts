@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards, Param, Inject } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../authentication/auth.guard';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { UserService } from './users.service';
 
 @Controller({ version: ['1'], path: 'users' })

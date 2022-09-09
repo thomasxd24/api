@@ -22,6 +22,7 @@
     "db:prisma:deploy": "npx prisma migrate deploy",
     "db:dev:rm": "docker compose -f docker-compose.yml -f docker-compose.dev.yml rm db -s -f -v",
     "db:dev:up": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up db -d",
+    "db:dev:update": "npx prisma db push",
     "db:dev:restart": "npm run db:dev:rm && npm run db:dev:up && npm run db:prisma:deploy",
     "prisma:test:deploy": "dotenv -e.env.test -- npm run db:prisma:deploy",
     "db:test:rm": "docker compose -f docker-compose.yml -f docker-compose.test.yml rm db -s -f -v",
