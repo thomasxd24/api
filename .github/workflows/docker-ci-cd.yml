@@ -79,6 +79,14 @@ jobs:
     permissions:
       packages: read
 
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up database container
+        run: |
+          npm install dotenv-cli &&
+          npm run db:test:restart
+
     services:
       postgres:
         image: postgres:14
