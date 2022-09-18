@@ -18,6 +18,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: action/checkout@v3
+
       - name: Check code format
         run: npm run lint
 
