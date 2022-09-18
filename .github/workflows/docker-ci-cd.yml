@@ -35,19 +35,16 @@ jobs:
           cache-to: type=gha,mode=max
           outputs: type=oci,dest=/tmp/test-image.tar
 
-      - name: Upload frontend image as artifact
+      - name: Upload test image as artifact
         uses: actions/upload-artifact@v3
         with:
           name: test-image
-          path: /tmp/test-image.tar
+          path: /tmp
 
   unit-testing:
     name: Unit testing
     runs-on: ubuntu-latest
     needs: [build-test-image]
-
-    permissions:
-      packages: read # needed to pull docker image from ghcr.io
 
     steps:
       - name: Set up Docker Buildx
