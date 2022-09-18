@@ -29,7 +29,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: false
-          context: .
           target: testing
           tags: ${{ github.repository }}:test
           cache-from: type=gha
