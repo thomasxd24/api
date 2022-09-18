@@ -41,7 +41,7 @@ jobs:
           target: testing
           builder: ${{ steps.buildx.outputs.name }}
           tags: ${{ github.repository }}:test
-          cache-from: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
           outputs: type=oci,dest=/tmp/test-image.tar
 
