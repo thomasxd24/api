@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-image
-          path: /tmp
+          path: /tmp/test-image.tar
 
   unit-testing:
     name: Unit testing
@@ -54,7 +54,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: test-image
-          path: /tmp/test-image.tar
+          path: /tmp
 
       - name: Load & run docker image
         run: |
