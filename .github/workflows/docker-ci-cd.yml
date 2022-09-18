@@ -31,7 +31,6 @@ jobs:
           push: false
           context: .
           target: testing
-          builder: ${{ steps.buildx.outputs.name }}
           tags: ${{ github.repository }}:test
           cache-from: type=gha
           cache-to: type=gha,mode=max
