@@ -30,10 +30,10 @@ jobs:
         with:
           push: false
           target: testing
-          tags: ${{ github.repository }}:test
+          tags: ${{ github.repository }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          outputs: type=oci,dest=/tmp/test-image.tar
+          outputs: type=docker,dest=/tmp/test-image.tar
 
       - name: Upload test image as artifact
         uses: actions/upload-artifact@v3
