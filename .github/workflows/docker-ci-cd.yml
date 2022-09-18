@@ -18,8 +18,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Check code format
-        uses: actions/checkout@v3
         run: |
           npm install eslint
           npm run lint
@@ -52,6 +53,8 @@ jobs:
     needs: [lint]
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Set up docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -65,7 +68,6 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Set up database container
-        uses: actions/checkout@v3
         run: |
           npm install dotenv-cli &&
           npm run db:test:restart
