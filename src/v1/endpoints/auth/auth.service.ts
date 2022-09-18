@@ -74,8 +74,10 @@ export class AuthService {
       },
     });
 
+    // remove hashed password from output
     return {
       token: this.helper.generateToken(user),
+      user: { uuid: user.uuid },
     };
   }
 }

@@ -2,7 +2,8 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import { IsDateString, IsEmail, IsNumber, IsOptional, IsString, Min, MinLength } from 'class-validator';
 
-export type SafeUser = Omit<User, 'password'>;
+export type SafeUser = Omit<User, 'password' & 'verifyToken'>;
+
 export class UpdateUserDto {
   @IsEmail()
   @IsOptional()

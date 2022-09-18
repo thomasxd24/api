@@ -25,14 +25,18 @@ export class UserService {
    * @return {SafeUser}
    */
   public async getUser(uuid: string): Promise<SafeUser> {
-    return this.prisma.user.findUnique({ where: { uuid: uuid } });
+    return this.prisma.user.findUnique({ where: { uuid: uuid } }).then((user) => {
+      delete user.password;
+      delete user.verifyToken;
+      return user;
+    });
   }
 
   /**
    * Delete user
    * @return {void}
    */
-  public async delete(uuid: string): Promise<User> {
-    return this.prisma.user.delete({ where: { uuid: uuid } });
+  public async delete(uuid: string): Promise<void> {
+    this.prisma.user.delete({ where: { uuid: uuid } });
   }
 }

@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class AuthValidated {
   token: string;
+  user: Pick<User, 'uuid'>;
 }
 
 @Injectable()
