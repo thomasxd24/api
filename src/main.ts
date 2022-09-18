@@ -34,7 +34,7 @@ async function bootstrap() {
   };
 
   // Creating the NestJS app
-  const app: NestExpressApplication = await NestFactory.create(AppModule);
+  const app: NestExpressApplication = await NestFactory.create(AppModule, { cors: { origin: '*', } });
 
   // Add static files to the app
   app.useStaticAssets(`${__dirname}/../public`);
@@ -45,11 +45,12 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config, options);
   SwaggerModule.setup('api/docs', app, document, swaggerOptions);
 
+  // TODO: define process.env.BASE_URL as base url of the API
   await app.listen(process.env.PORT);
 
   Logger.log(`Server running on port ${process.env.PORT}`, 'Bootstrap');
-  Logger.log(`Swagger documentation available on http://localhost:${process.env.PORT}/api/docs`, 'Bootstrap');
-  Logger.log(`Swagger JSON docs at http://localhost:${process.env.PORT}/api/docs-json`, 'Bootstrap');
+  Logger.log(`Swagger documentation available on ${process.env.BASE_URL}:${process.env.PORT}/api/docs`, 'Bootstrap');
+  Logger.log(`Swagger JSON docs at ${process.env.BASE_URL}:${process.env.PORT}/api/docs-json`, 'Bootstrap');
 }
 
 bootstrap();

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './users/users.module';
+import { AuthModule } from './endpoints/auth/auth.module';
+import { UserModule } from './endpoints/users/users.module';
 import { V1Controller } from './v1.controller';
 
 @Module({
