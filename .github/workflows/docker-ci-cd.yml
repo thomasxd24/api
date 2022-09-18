@@ -13,69 +13,62 @@ env:
   REPO_NAME: api
 
 jobs:
-  build-test-image:
-    name: Building test image
+  lint:
+    name: Linting code
     runs-on: ubuntu-latest
 
-    permissions:
-      packages: write # needed to push docker image to ghcr.io
+    steps:
+      - name: Check code format
+        run: npm run lint
+
+  unit-tests:
+    name: Building test image
+    runs-on: ubuntu-latest
+    needs: [lint]
 
     steps:
       - name: Set up Docker Buildx
-        id: buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build image for unit testing
+      - name: Build image
         uses: docker/build-push-action@v2
         with:
           push: false
           target: testing
-          tags: ${{ github.repository }}
+          tags: test-image
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          outputs: type=docker,dest=/tmp/test-image.tar
 
-      - name: Upload test image as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-image
-          path: /tmp/test-image.tar
-
-  unit-testing:
-    name: Unit testing
-    runs-on: ubuntu-latest
-    needs: [build-test-image]
-
-    steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: test-image
-          path: /tmp
-
-      - name: Load & run docker image
+      - name: Run docker image
         run: |
-          docker load --input /tmp/test-image.tar
           docker run --rm test-image npm run test
 
-  end-to-end-testing:
+  end-to-end-tests:
     name: End to End test (e2e)
     runs-on: ubuntu-latest
-    needs: [build-test-image]
-
-    permissions:
-      packages: read
+    needs: [lint]
 
     steps:
-      - uses: actions/checkout@v3
-
       - name: Set up database container
         run: |
           npm install dotenv-cli &&
           npm run db:test:restart
+
+      - name: Set up docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build image
+        uses: docker/build-push-action@v2
+        with:
+          push: false
+          target: testing
+          tags: test-image
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run end to end tests
+        run: |
+          docker run --rm test-image npm run test:e2e
 
     services:
       postgres:
@@ -88,7 +81,7 @@ jobs:
   build-final-image:
     name: Building production image
     runs-on: ubuntu-latest
-    needs: [unit-testing, end-to-end-testing]
+    needs: [unit-tests, end-to-end-tests]
 
     permissions:
       packages: write # needed to push docker image to ghcr.io
