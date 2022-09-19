@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UpdateUserDto } from './users.dto';
@@ -26,6 +26,9 @@ export class UserService {
    */
   public async getUser(uuid: string): Promise<SafeUser> {
     return this.prisma.user.findUnique({ where: { uuid: uuid } }).then((user) => {
+      if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      
+
       delete user.password;
       delete user.verifyToken;
       return user;
