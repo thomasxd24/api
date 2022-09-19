@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node . .
 
-RUN npm ci && \
+RUN npm ci \
     npm run build
 
 USER node

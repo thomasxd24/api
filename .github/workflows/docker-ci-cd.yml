@@ -45,7 +45,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-          docker run --rm unit-tests npm run test
+          docker run --rm unit-tests npm run test:cov
 
   end-to-end-tests:
     name: End to End test (e2e)
