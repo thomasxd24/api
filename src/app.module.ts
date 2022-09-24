@@ -4,15 +4,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './v1/prisma/prisma.module';
 import { ModuleV1 } from './v1/v1.module';
+import yamlConfiguration from './config/yamlConfiguration';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      // Make the config module alvailable everywhere
-      isGlobal: true,
-    }),
     ModuleV1,
     PrismaModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env', '.env.example'],
+      load: [yamlConfiguration],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
