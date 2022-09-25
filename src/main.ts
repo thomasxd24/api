@@ -15,7 +15,8 @@ async function bootstrap() {
 
   //#region Global configuration
   const configService = app.get(ConfigService);
-  const appPort = configService.get('http.port');
+  const appPort = configService.getOrThrow('PORT');
+  const baseUrl = configService.getOrThrow('HOST');
   //#endregion
 
   //#region Configuration of the swagger documentation
@@ -41,8 +42,8 @@ async function bootstrap() {
   await app.listen(appPort);
 
   Logger.log(`Server running on port ${appPort}`, 'Bootstrap');
-  Logger.log(`Swagger documentation available on http://localhost:${appPort}/docs`, 'Bootstrap');
-  Logger.log(`Swagger JSON docs at http://localhost:${appPort}/docs-json`, 'Bootstrap');
+  Logger.log(`Swagger documentation available on http://${baseUrl}:${appPort}/api/docs`, 'Bootstrap');
+  Logger.log(`Swagger JSON docs at http://${baseUrl}:${appPort}/api/docs-json`, 'Bootstrap');
 }
 
 bootstrap();
