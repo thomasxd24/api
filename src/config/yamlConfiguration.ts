@@ -4,8 +4,8 @@ import * as yaml from 'js-yaml';
 import { config } from 'dotenv';
 import { type } from 'os';
 
-const YAML_DEFAULT_FILE = '../../config/config.yml';
-const YAML_OVERRIDE_FILE = '../../config/config.override.yml';
+const YAML_DEFAULT_FILE = '../config/config.yml';
+const YAML_OVERRIDE_FILE = '../config/config.override.yml';
 
 type ConfigElt = Record<string, any>;
 
