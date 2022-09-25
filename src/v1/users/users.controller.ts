@@ -3,7 +3,7 @@ import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../authentication/auth.guard';
 import { UserService } from './users.service';
 
-@Controller('users')
+@Controller({ version: ['1'], path: 'users' })
 @ApiTags('users')
 export class UserController {
   @Inject(UserService)
