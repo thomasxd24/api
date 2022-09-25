@@ -173,4 +173,7 @@ dist
 # Db related
 **/*.db
 
+# Config related
+**/config.override.yml
+
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode

@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   db:
     container_name: db
@@ -9,4 +10,15 @@ services:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
       POSTGRES_DB: sith4-api-test
-
+  api:
+    platform: linux/amd64
+    container_name: api
+    build: .
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env
+    volumes:
+      - type: bind
+        source: ./config/config.override.yml
+        target: /usr/src/app/dist
