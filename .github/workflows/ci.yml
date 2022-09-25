@@ -49,7 +49,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install dotenv-cli
+          sudo apt install dotenv
           npm install
 
       - name: Set up database container
