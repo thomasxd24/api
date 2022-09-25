@@ -40,7 +40,8 @@ model User {
 
   // --- System fields ---
   permissions    Int      @default(4)
-  isVerified     Boolean  @default(false)
+  verified       Boolean  @default(false)
+  verifyToken    String?  @unique
   createdAt      DateTime @default(now())
   lastLogin      DateTime?
   organizationId Int?

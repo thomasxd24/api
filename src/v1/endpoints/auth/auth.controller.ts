@@ -4,9 +4,21 @@ import { LoginDto, RegisterDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthValidated } from './auth.helper';
-
-import { Body, ClassSerializerInterceptor, Controller, Inject, Post, Req, UseInterceptors } from '@nestjs/common';
 import { SafeUser } from '../users/users.dto';
+
+import {
+  Body,
+  Headers,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Req,
+  Res,
+  UseInterceptors
+} from '@nestjs/common';
 
 export interface UserRequest extends Request {
   user: SafeUser;
@@ -20,8 +32,8 @@ export class AuthController {
 
   @Post('register')
   @UseInterceptors(ClassSerializerInterceptor)
-  private register(@Body() body: RegisterDto): Promise<SafeUser | never> {
-    return this.service.register(body);
+  private register(@Body() body: RegisterDto, @Headers() head): Promise<SafeUser | never> {
+    return this.service.register(body, head.origin);
   }
 
   @Post('login')
@@ -32,5 +44,10 @@ export class AuthController {
   @Post('refresh')
   private refresh(@Req() { user }: UserRequest): Promise<AuthValidated | never> {
     return this.service.refresh(<User>user);
+  }
+
+  @Get('verify/:uuid/:token/:redirect')
+  private verify(@Param('uuid') uuid: string, @Param('token') token: string, @Param('redirect') redirect: string, @Res() res): Promise<any> {
+    return this.service.verify(uuid, token).then(() => res.redirect(decodeURI(redirect)));
   }
 }

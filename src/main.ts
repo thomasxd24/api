@@ -36,7 +36,7 @@ async function bootstrap() {
   app.enableVersioning({ type: VersioningType.URI });
 
   const document = SwaggerModule.createDocument(app, config, options);
-  SwaggerModule.setup('docs', app, document, swaggerOptions);
+  SwaggerModule.setup('api/docs', app, document, swaggerOptions);
 
   await app.listen(appPort);
 

@@ -1,7 +1,9 @@
 {
   "cSpell.words": [
     "darkmode",
+    "datasources",
     "nestjs",
+    "prisma",
     "topbar",
     "typeorm"
   ]

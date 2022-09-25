@@ -1,6 +1,7 @@
 import { Controller, Get, UseGuards, Param, Inject } from '@nestjs/common';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../authentication/auth.guard';
+import { JwtAuthGuard } from '../auth/auth.guard';
+import { SafeUser } from './users.dto';
 import { UserService } from './users.service';
 
 @Controller({ version: ['1'], path: 'users' })
@@ -9,10 +10,10 @@ export class UserController {
   @Inject(UserService)
   private readonly userService: UserService;
 
-  @Get('id')
+  @Get(':id')
   @ApiSecurity('authenticatedUser')
   @UseGuards(JwtAuthGuard)
-  private root(@Param('id') id: string): Promise<any> {
+  private root(@Param('id') id: string): Promise<SafeUser> {
     return this.userService.getUser(id);
   }
 }

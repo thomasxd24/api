@@ -1,3 +1,4 @@
+import { Body } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
@@ -19,14 +20,17 @@ export class RegisterDto {
 
   @ApiPropertyOptional()
   @IsString()
+  @ApiProperty()
   public readonly firstName: string;
 
   @ApiPropertyOptional()
   @IsString()
+  @ApiProperty()
   public readonly lastName: string;
 
   @ApiProperty()
   @IsDate()
+  @ApiProperty()
   @Type(() => Date)
   public readonly birthDate: Date;
 }
