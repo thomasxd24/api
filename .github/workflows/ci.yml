@@ -54,7 +54,7 @@ jobs:
 
       - name: Set up database container
         run: |
-          dotenv -e .env.test -- npx prisma migrate deploy
+          dotenv -e .env.example -- npx prisma migrate deploy
 
       - name: Run end to end tests
         run: npm run test:e2e
