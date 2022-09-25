@@ -49,12 +49,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt install dotenv-cli
           npm install
 
       - name: Set up database container
         run: |
-          dotenv -e .env.example -- npx prisma migrate deploy
+          npx dotenv -e .env.example -- npx prisma migrate deploy
 
       - name: Run end to end tests
         run: npm run test:e2e
