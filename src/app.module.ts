@@ -4,7 +4,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './v1/prisma/prisma.module';
 import { ModuleV1 } from './v1/v1.module';
-import yamlConfiguration from './config/yamlConfiguration';
 
 @Module({
   imports: [
@@ -13,7 +12,6 @@ import yamlConfiguration from './config/yamlConfiguration';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env', '.env.example'],
-      load: [yamlConfiguration],
     }),
   ],
   controllers: [AppController],
