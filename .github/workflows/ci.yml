@@ -48,11 +48,13 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install dotenv
+          npm install
 
       - name: Set up database container
         run: |
-          npx prisma migrate deploy
+          dotenv -e .env.test -- npx prisma migrate deploy
 
       - name: Run end to end tests
         run: npm run test:e2e
