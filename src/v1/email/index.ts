@@ -1,10 +1,10 @@
 import * as nodemailer from 'nodemailer';
 
 export const transporter = nodemailer.createTransport({
-  host: 'smtp.utbm.fr',
-  port: 465,
-  secure: true,
-  requireTLS: true,
+  host: process.env.SMTP_HOST || 'smtp.utbm.fr',
+  port: Number(process.env.SMTP_PORT) || 465,
+  secure:  process.env.SMTP_SECURE.toLowerCase() === 'true',
+  requireTLS: process.env.SMTP_TLS.toLowerCase() === 'true',
   auth: {
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,

@@ -9,6 +9,18 @@ _The REST API using at backend of [sith4](https://github.com/ae-utbm/sith4)_
 $ npm install
 ```
 
+## Migration of database
+
+```bash
+$ npm run migrate:dev
+```
+
+## Setup development environment and dependencies
+
+```bash
+docker-compose -f docker-compose.dev.yml up -d
+```
+
 ## Running the app
 
 ```bash
