@@ -7,6 +7,8 @@
     "github.vscode-pull-request-github",
     "eamodio.gitlens",
     "ms-vscode.vscode-typescript-next",
-    "Prisma.prisma"
+    "prisma.prisma",
+    "dbaeumer.vscode-eslint",
+    "rvest.vs-code-prettier-eslint"
   ]
 }

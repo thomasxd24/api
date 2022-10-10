@@ -20,7 +20,7 @@ jobs:
 
       - name: Check code format
         run: |
-          npm install eslint
+          npm install eslint prettier
           npm run lint
 
   unit-tests:
